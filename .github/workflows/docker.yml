@@ -1,0 +1,22 @@
+name: Example Workflow
+
+on: 
+  workflow_dispatch:
+    inputs:
+      build-input:
+        description: 'optional_input'     
+        required: false
+        default: 'optional_input' # does nothing now but could be useful later
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Build and run Docker container
+      run: |
+        docker build -t mycontainer .
+        docker run -v $(pwd)/output:/output mycontainer
